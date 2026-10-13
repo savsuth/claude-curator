@@ -10,6 +10,7 @@ so every result goes through the same normalisation.
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -59,6 +60,39 @@ class InvocationResult:
 
 
 # --- real runner ----------------------------------------------------------------------
+
+_CREDENTIAL_HELPER = re.compile(r"^\s*(credential_process|credential_source)\s*=", re.I)
+_SECTION = re.compile(r"^\s*\[(?:profile\s+)?([^\]]+)\]")
+
+
+def sandbox_blockers(allow_tools: tuple[str, ...], environ=os.environ) -> list[str]:
+    """Reasons Claude Code will refuse this experiment's runs on this machine.
+
+    Granting Bash makes every run use Claude Code's OS sandbox, which must exclude
+    credential files. It refuses when an AWS profile delegates to a credential helper
+    it cannot follow (observed with Claude Code 2.1.296). Only file and profile names
+    are reported, never the helper command.
+    """
+    if not any(t == "Bash" or t.startswith("Bash(") for t in allow_tools):
+        return []
+    home = Path.home()
+    files = [Path(environ.get("AWS_CONFIG_FILE") or home / ".aws" / "config"),
+             Path(environ.get("AWS_SHARED_CREDENTIALS_FILE") or home / ".aws" / "credentials")]
+    reasons = []
+    for path in files:
+        try:
+            lines = path.read_text(errors="replace").splitlines()
+        except OSError:
+            continue
+        profile = "default"
+        for line in lines:
+            if m := _SECTION.match(line):
+                profile = m.group(1).strip()
+            elif m := _CREDENTIAL_HELPER.match(line):
+                reasons.append(f"{path}: profile {profile!r} uses {m.group(1)}, which Claude Code's Bash sandbox "
+                               "cannot exclude, so every run that grants Bash will be refused")
+    return reasons
+
 
 def parse_version(text: str) -> tuple[int, ...] | None:
     m = re.search(r"(\d+)\.(\d+)\.(\d+)", text or "")

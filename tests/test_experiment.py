@@ -7,10 +7,12 @@ nothing about live behaviour.
 import contextlib
 import io
 import json
+import os
 import shutil
 import subprocess
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from claude_curator.cli import main
 from tests.helpers import EXAMPLES, temp_dir
@@ -23,6 +25,12 @@ class Scenario(unittest.TestCase):
         shutil.copytree(EXAMPLES / "changelog-writer", self.example,
                         ignore=shutil.ignore_patterns(".claude-curator"))
         self.out = self.tmp / "runs"
+        # Keep every scenario independent of the AWS files on the machine running the tests.
+        self.aws_config = self.tmp / "aws-config"
+        env = mock.patch.dict(os.environ, {"AWS_CONFIG_FILE": str(self.aws_config),
+                                           "AWS_SHARED_CREDENTIALS_FILE": str(self.tmp / "aws-credentials")})
+        env.start()
+        self.addCleanup(env.stop)
 
     def cli(self, *args):
         out, err = io.StringIO(), io.StringIO()
@@ -92,6 +100,31 @@ class Scenario(unittest.TestCase):
         decision, _ = self.run_fixture("preserves.json", "curator-broken-candidate.toml")
         self.assertEqual(decision["recommendation"], "inconclusive")
         self.assertTrue(any("missing-resource" in r for r in decision["reasons"]))
+
+    # --- environment checks before a paid run ----------------------------------------
+
+    def test_check_flags_an_aws_credential_helper_that_blocks_the_sandbox(self):
+        self.aws_config.write_text("[profile csv-pipeline]\nregion = us-east-1\n"
+                                   "credential_process = /usr/local/bin/helper --token s3cr3t\n")
+        code, out, _ = self.cli("check", self.example / "curator.toml")
+        self.assertEqual(code, 1)
+        self.assertIn("credential_process", out)
+        self.assertIn("csv-pipeline", out)
+        self.assertIn(str(self.aws_config), out)
+        self.assertNotIn("s3cr3t", out)  # never print the helper command
+
+    def test_check_passes_when_aws_config_has_no_credential_helper(self):
+        self.aws_config.write_text("[default]\nregion = us-east-1\n")
+        code, out, _ = self.cli("check", self.example / "curator.toml")
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("sandbox", out.lower())
+
+    def test_credential_helper_is_irrelevant_when_the_shell_is_not_granted(self):
+        self.aws_config.write_text("[profile x]\ncredential_source = Ec2InstanceMetadata\n")
+        spec = self.example / "curator.toml"
+        spec.write_text(spec.read_text().replace('allow_tools = ["Write", "Edit", "Bash(python3 *)"]', 'allow_tools = ["Write", "Edit"]'))
+        code, out, _ = self.cli("check", spec)
+        self.assertEqual(code, 0, out)
 
     # --- limits, reproducibility and the patch -------------------------------------------
 

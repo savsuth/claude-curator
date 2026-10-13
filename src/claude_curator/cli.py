@@ -13,7 +13,7 @@ from claude_curator.experiment import ExperimentError, execute, prepare, rerende
 from claude_curator.package import PackageError
 from claude_curator.patch import PatchError
 from claude_curator.results import ResultError
-from claude_curator.runners import FixtureRunner, Invocation, PluginEvalRunner, RunnerError
+from claude_curator.runners import FixtureRunner, Invocation, PluginEvalRunner, RunnerError, sandbox_blockers
 from claude_curator.spec import SpecError
 from claude_curator.suite import SuiteError
 
@@ -67,7 +67,13 @@ def cmd_check(args) -> int:
                              allow_tools=prep.spec.run.allow_tools, scaffold=prep.spec.run.scaffold, max_cost_usd=prep.spec.run.max_cost_usd,
                              trust_plugin=True)
         print("Example runner command:\n  " + " ".join(runner.command(example)).replace(str(prep.run_dir), "<run>"))
-        return 1 if ev.integrity_issues else 0
+        blockers = sandbox_blockers(prep.spec.run.allow_tools)
+        if blockers:
+            print("Environment problem (real runs only):")
+            for b in blockers:
+                print(f"  - {b}")
+            print("  Run the experiment in a VM or container without these credentials, or drop the Bash grant.")
+        return 1 if ev.integrity_issues or blockers else 0
 
 
 def cmd_run(args) -> int:

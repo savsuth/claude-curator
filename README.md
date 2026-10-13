@@ -32,16 +32,6 @@ Patch:    .claude-curator/runs/<run-id>/change.patch
 Evidence: .claude-curator/runs/<run-id>
 ```
 
-And this is a live run through `claude plugin eval`: one case, one run per
-condition, Claude Sonnet 5.5, in an isolated Debian 12 VM. It is an integration
-check, not a verdict; the decision rules need at least two cases.
-
-| Condition | Turns | Estimated cost | Skill invoked | Graders |
-|---|---|---|---|---|
-| Original skill | 6 | $0.054 | observed | heading, entry, validator run: all pass |
-| Simplified (Worked examples removed) | 7 | $0.055 | observed | heading, entry, validator run: all pass |
-| No skill | 5 | $0.050 | not applicable | heading and entry pass; validator not run |
-
 ## About
 
 Skills collect instructions that newer models may no longer need, and maintainers
@@ -198,7 +188,9 @@ claude-curator check path/to/curator.toml
 
 Scans both packages for missing or out-of-package references and unsupported
 features, shows the patch size, the planned number of agent runs and the exact
-runner command, and keeps nothing. It exits 1 if the candidate introduces a problem.
+runner command, and keeps nothing. It exits 1 if the candidate introduces a problem,
+or if this machine would refuse the runs: for example, an AWS profile that uses
+`credential_process` when the experiment grants Bash.
 
 ### 3. Run it
 
