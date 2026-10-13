@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Curator</title>
+  <desc id="desc">Claude Curator tests a trimmed Claude Code skill against the original and a no-skill baseline. The example shows the Worked examples section of a SKILL.md marked for removal, between sections that stay.</desc>
+  <rect width="1200" height="380" rx="24" fill="#0E1116"/>
+
+  <g id="title-block" transform="translate(60 0)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <text x="0" y="78" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" letter-spacing="2" fill="#8B929C">CLAUDE CODE SKILLS / MAINTENANCE</text>
+    <text x="0" y="158" font-size="76" font-weight="700" fill="#F2EEE6">Claude Curator</text>
+    <text x="0" y="214" font-size="26" fill="#D9DCE1">Test a trimmed skill against the original</text>
+    <text x="0" y="250" font-size="26" fill="#D9DCE1">and a no-skill baseline. Ship the cut only</text>
+    <text x="0" y="286" font-size="26" fill="#D9DCE1">when the evidence holds.</text>
+    <text x="0" y="336" font-size="20" fill="#8B929C">Verdicts: keep, simplify, retirement candidate, inconclusive</text>
+  </g>
+
+  <g id="project-proof" transform="translate(640 44)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <rect width="500" height="292" rx="14" fill="#161B22" stroke="#2A313B" stroke-width="2"/>
+    <text x="24" y="38" font-size="18" fill="#8B929C">changelog-writer/SKILL.md</text>
+    <text x="476" y="38" font-size="18" fill="#F0883E" text-anchor="end">-26 lines</text>
+    <line x1="0" y1="56" x2="500" y2="56" stroke="#2A313B" stroke-width="2"/>
+    <text x="24" y="92" font-size="20" fill="#F2EEE6">## Format rules</text>
+    <text x="24" y="122" font-size="18" fill="#8B929C">- Group entries under ### Fixed ...</text>
+    <rect x="12" y="138" width="476" height="96" rx="8" fill="#F0883E" fill-opacity="0.12"/>
+    <text x="24" y="166" font-size="20" fill="#F0883E">- ## Worked examples</text>
+    <text x="24" y="194" font-size="18" fill="#F0883E" fill-opacity="0.8">- A bug fix in the parser, PR 412:</text>
+    <text x="24" y="220" font-size="18" fill="#F0883E" fill-opacity="0.8">- ### Fixed  - Fixed a crash ... (#412)</text>
+    <text x="24" y="264" font-size="20" fill="#F2EEE6">## Validation</text>
+  </g>
+</svg>

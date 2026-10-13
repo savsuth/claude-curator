@@ -1,0 +1,54 @@
+{
+  "label": "OFFLINE FIXTURE: scripted outcomes for demonstration and tests. No model was called; nothing here is evidence about live behaviour.",
+  "description": "Two candidate invocations fail before producing results, and one grader errors.",
+  "cost_per_run_usd": 0.06,
+  "default": {
+    "original": {},
+    "candidate": {},
+    "none": {
+      "fail": [
+        "headings",
+        "ran-validator"
+      ]
+    }
+  },
+  "cases": {
+    "read-current-version": {
+      "original": {
+        "invoked": false
+      },
+      "candidate": {
+        "invoked": false
+      }
+    },
+    "perf-improvement": {
+      "candidate": [
+        {},
+        {
+          "grader_error": [
+            "entry"
+          ]
+        },
+        {
+          "grader_error": [
+            "entry"
+          ]
+        }
+      ]
+    }
+  },
+  "fail_invocations": [
+    {
+      "case": "remove-legacy-api",
+      "condition": "candidate",
+      "exit_code": 1,
+      "stderr": "API Error: 529 overloaded"
+    },
+    {
+      "case": "security-patch",
+      "condition": "candidate",
+      "exit_code": 1,
+      "stderr": "API Error: 529 overloaded"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "label": "OFFLINE FIXTURE: scripted outcomes for demonstration and tests. No model was called; nothing here is evidence about live behaviour.",
+  "description": "Removing Validation: the candidate stops running the bundled validator.",
+  "cost_per_run_usd": 0.06,
+  "default": {
+    "original": {},
+    "candidate": {
+      "fail": [
+        "ran-validator"
+      ],
+      "cost": 0.04
+    },
+    "none": {
+      "fail": [
+        "headings",
+        "ran-validator"
+      ]
+    }
+  },
+  "cases": {
+    "read-current-version": {
+      "original": {
+        "invoked": false
+      },
+      "candidate": {
+        "invoked": false
+      }
+    }
+  }
+}

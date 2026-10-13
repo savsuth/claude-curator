@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: remove-legacy-api
+context:
+  scaffold_script: fixture.sh

@@ -1,0 +1,25 @@
+{
+  "label": "OFFLINE FIXTURE: scripted outcomes for demonstration and tests. No model was called; nothing here is evidence about live behaviour.",
+  "description": "Expensive runs: use with --max-cost-usd 4 to see the ceiling stop the experiment.",
+  "cost_per_run_usd": 0.6,
+  "default": {
+    "original": {},
+    "candidate": {},
+    "none": {
+      "fail": [
+        "headings",
+        "ran-validator"
+      ]
+    }
+  },
+  "cases": {
+    "read-current-version": {
+      "original": {
+        "invoked": false
+      },
+      "candidate": {
+        "invoked": false
+      }
+    }
+  }
+}

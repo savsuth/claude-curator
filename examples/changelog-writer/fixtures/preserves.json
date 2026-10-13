@@ -1,0 +1,50 @@
+{
+  "label": "OFFLINE FIXTURE: scripted outcomes for demonstration and tests. No model was called; nothing here is evidence about live behaviour.",
+  "description": "Removing Worked examples: candidate matches the original on every requirement; the skill clearly beats no skill.",
+  "cost_per_run_usd": 0.06,
+  "default": {
+    "original": {},
+    "candidate": {
+      "cost": 0.05
+    },
+    "none": {
+      "fail": [
+        "headings",
+        "ran-validator"
+      ]
+    }
+  },
+  "cases": {
+    "read-current-version": {
+      "original": {
+        "invoked": false
+      },
+      "candidate": {
+        "invoked": false
+      }
+    },
+    "add-export-flag": {
+      "original": [
+        {},
+        {
+          "fail": [
+            "entry"
+          ]
+        },
+        {}
+      ]
+    },
+    "perf-improvement": {
+      "candidate": [
+        {},
+        {},
+        {
+          "fail": [
+            "entry"
+          ],
+          "cost": 0.05
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+  <title id="title">How Claude Curator runs an experiment</title>
+  <desc id="desc">The spec, skill and eval suite are frozen and turned into a patch. The original skill, the simplified candidate and no skill each run the same held-out cases through claude plugin eval in isolated sessions. Decision rules then produce a report, the patch and the raw evidence.</desc>
+  <rect width="1200" height="400" rx="24" fill="#0E1116"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <g id="inputs" transform="translate(48 120)">
+      <rect width="210" height="160" rx="14" fill="#161B22" stroke="#2A313B" stroke-width="2"/>
+      <text x="20" y="44" font-size="22" font-weight="600" fill="#F2EEE6">Inputs</text>
+      <text x="20" y="80" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#C9CDD3">curator.toml</text>
+      <text x="20" y="108" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#C9CDD3">skill package</text>
+      <text x="20" y="136" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#C9CDD3">eval suite</text>
+    </g>
+    <path d="M262 200 H298" stroke="#8B929C" stroke-width="3"/>
+    <path d="M298 200 l-10 -7 v14 z" fill="#8B929C"/>
+    <g id="freeze" transform="translate(302 140)">
+      <rect width="190" height="120" rx="14" fill="#161B22" stroke="#2A313B" stroke-width="2"/>
+      <text x="20" y="46" font-size="22" font-weight="600" fill="#F2EEE6">Freeze</text>
+      <text x="20" y="80" font-size="20" fill="#C9CDD3">copies, hashes,</text>
+      <text x="20" y="104" font-size="20" fill="#C9CDD3">the patch</text>
+    </g>
+    <path d="M496 200 C 530 200, 530 92, 566 92" stroke="#8B929C" stroke-width="3" fill="none"/>
+    <path d="M496 200 H566" stroke="#8B929C" stroke-width="3"/>
+    <path d="M496 200 C 530 200, 530 308, 566 308" stroke="#8B929C" stroke-width="3" fill="none"/>
+    <g id="conditions" transform="translate(566 52)">
+      <rect width="300" height="80" rx="12" fill="#161B22" stroke="#2A313B" stroke-width="2"/>
+      <text x="20" y="34" font-size="22" font-weight="600" fill="#F2EEE6">Original skill</text>
+      <text x="20" y="62" font-size="18" fill="#8B929C">as it is today</text>
+      <rect y="108" width="300" height="80" rx="12" fill="#161B22" stroke="#F0883E" stroke-width="2"/>
+      <text x="20" y="142" font-size="22" font-weight="600" fill="#F0883E">Candidate</text>
+      <text x="20" y="170" font-size="18" fill="#8B929C">section removed</text>
+      <rect y="216" width="300" height="80" rx="12" fill="#161B22" stroke="#2A313B" stroke-width="2"/>
+      <text x="20" y="250" font-size="22" font-weight="600" fill="#F2EEE6">No skill</text>
+      <text x="20" y="278" font-size="18" fill="#8B929C">baseline</text>
+    </g>
+    <text x="716" y="38" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#8B929C" text-anchor="middle">claude plugin eval, isolated runs</text>
+    <path d="M870 92 C 904 92, 904 200, 938 200" stroke="#8B929C" stroke-width="3" fill="none"/>
+    <path d="M870 200 H938" stroke="#8B929C" stroke-width="3"/>
+    <path d="M870 308 C 904 308, 904 200, 938 200" stroke="#8B929C" stroke-width="3" fill="none"/>
+    <path d="M948 200 l-10 -7 v14 z" fill="#8B929C"/>
+    <g id="outputs" transform="translate(950 110)">
+      <rect width="202" height="180" rx="14" fill="#161B22" stroke="#2A313B" stroke-width="2"/>
+      <text x="20" y="44" font-size="22" font-weight="600" fill="#F2EEE6">Decide</text>
+      <text x="20" y="82" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#C9CDD3">report.md</text>
+      <text x="20" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#C9CDD3">change.patch</text>
+      <text x="20" y="138" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#C9CDD3">raw evidence</text>
+    </g>
+  </g>
+</svg>

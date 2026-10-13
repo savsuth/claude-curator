@@ -1,0 +1,51 @@
+{
+  "label": "OFFLINE FIXTURE: scripted outcomes for demonstration and tests. No model was called; nothing here is evidence about live behaviour.",
+  "description": "Noisy candidate results: the interval crosses the tolerance, so more cases or runs are needed.",
+  "cost_per_run_usd": 0.06,
+  "default": {
+    "original": {},
+    "candidate": {},
+    "none": {
+      "fail": [
+        "headings",
+        "ran-validator"
+      ]
+    }
+  },
+  "cases": {
+    "read-current-version": {
+      "original": {
+        "invoked": false
+      },
+      "candidate": {
+        "invoked": false
+      }
+    },
+    "deprecate-config-key": {
+      "candidate": [
+        {
+          "fail": [
+            "entry"
+          ]
+        },
+        {},
+        {
+          "fail": [
+            "entry"
+          ]
+        }
+      ]
+    },
+    "perf-improvement": {
+      "candidate": [
+        {},
+        {
+          "fail": [
+            "entry"
+          ]
+        },
+        {}
+      ]
+    }
+  }
+}

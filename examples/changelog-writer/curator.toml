@@ -1,0 +1,54 @@
+# Claude Curator experiment: can "Worked examples" be removed from changelog-writer?
+
+[experiment]
+name = "changelog-writer: remove Worked examples"
+
+[skill]
+path = "skills/changelog-writer"
+repo_path = "skills/changelog-writer"
+
+[change]
+remove_section = "Worked examples"
+rationale = "The examples restate the format rules; current models may follow the rules without them, and the section costs context on every invocation."
+
+[suite]
+path = "evals"
+development = ["dev-rename-command", "dev-bump-dependency"]
+heldout = ["fix-parser-crash", "add-export-flag", "remove-legacy-api", "deprecate-config-key",
+           "security-patch", "perf-improvement", "explicit-request", "read-current-version"]
+explicit = ["explicit-request"]
+no_invocation_expected = ["read-current-version"]
+
+[decision]
+tolerance = 0.05
+confidence = 0.95
+min_cases = 6
+min_runs_per_case = 3
+
+[[requirements]]
+id = "validator"
+description = "The bundled validator is run before finishing"
+critical = true
+graders = ["fix-parser-crash/ran-validator", "add-export-flag/ran-validator", "security-patch/ran-validator"]
+package_contains = [{ file = "SKILL.md", text = "scripts/check_changelog.py" }]
+
+[[requirements]]
+id = "team-headings"
+description = "Entries land under the correct Keep a Changelog heading in [Unreleased]"
+critical = true
+graders = ["fix-parser-crash/headings", "remove-legacy-api/headings", "security-patch/headings", "deprecate-config-key/headings"]
+
+[[requirements]]
+id = "read-only-questions"
+description = "Questions about the changelog do not edit it"
+critical = true
+graders = ["read-current-version/no-edit"]
+
+[run]
+runs = 3
+model = "claude-sonnet-5-5"
+judge_model = "claude-haiku-5-5"
+allow_tools = ["Write", "Edit", "Bash(python3 *)"]
+scaffold = true
+max_runs = 90
+max_cost_usd = 15.0

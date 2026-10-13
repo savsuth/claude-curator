@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claude-curator"
+version = "0.1.0"
+description = "Evidence-based decisions on removing sections from Claude Code skills."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = []
+
+[project.scripts]
+claude-curator = "claude_curator.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
